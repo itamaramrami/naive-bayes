@@ -23,7 +23,7 @@ def test():
             res["yes"] += 1
         else:
             res["no"] += 1
-        print(f"תיזחת: {prediction} | תמא: {actual} ")
+            print(f"תיזחת: {prediction} | תמא: {actual} ")
     
 
     accuracy = res["yes"] / (res["yes"] + res["no"]) * 100
