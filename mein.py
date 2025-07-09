@@ -6,19 +6,13 @@ from test import *
 
 
 def mein():
-    # resQuery = menu()
-    query = {
-    "AgeofDomain": "1",
-    "Redirecting//": "1",
-    "DomainRegLen": "1"
-}
-    # summary = dictofsummary()
-    # summary = dictofsummary()
-    # result, probs = predict_from_summary(summary, query)
-    # print("result:", result)
-    # print("percentage:", probs)
-    # print(db.columns)
-    print(test())
+    resQuery = menu()
+    summary = dictofsummary()
+    result, probs = predict_from_summary(summary, resQuery)
+    print("result:", result)
+    print("percentage:", probs)
+   
+    # print(test())
     
 
 
