@@ -1,34 +1,37 @@
 import pandas as pd
-from db import *
-from dal import *
+from db import TestData
+from dal import NaiveBayesClassifier
 
-def dictOfTest():
-    listoftest=test_db.to_dict(orient='records')
-    return listoftest
+class Tester:
+    def __init__(self):
+        self.data_loader = TestData()
+        self.test_db = self.data_loader.get_test_data()
+        self.classifier = NaiveBayesClassifier()
+        self.summary = self.classifier.dictofsummary()
+        self.target_col = self.test_db.columns[-1]
 
+    def dict_of_test(self):
+        return self.test_db.to_dict(orient='records')
 
-def test():
-    res = {"yes": 0, "no": 0}
-    lisTtest = dictOfTest()
-    target_col = test_db.columns[-1]
-    summary = dictofsummary()
+    def run_test(self, verbose: bool = False):
+        res = {"yes": 0, "no": 0}
+        test_records = self.dict_of_test()
 
-    for row in lisTtest:
-        actual = row[target_col]
-        query = row.copy()
-        del query[target_col]
-        prediction, scores = predict_from_summary(summary, query)
+        for row in test_records:
+            actual = row[self.target_col]
+            query = row.copy()
+            del query[self.target_col]
 
-        if prediction == actual:
-            res["yes"] += 1
-        else:
-            res["no"] += 1
-            print(f"תיזחת: {prediction} | תמא: {actual} ")
-    
+            prediction, scores = self.classifier.predict_from_summary(self.summary, query)
 
-    accuracy = res["yes"] / (res["yes"] + res["no"]) * 100
-    print(f" קויד זוחא: {accuracy:.2f}%")
-    return res
+            if prediction == actual:
+                res["yes"] += 1
+            else:
+                res["no"] += 1
+                print(f"תיזחת: {prediction} | תמא: {actual}")
 
-        
-    
+        total = res["yes"] + res["no"]
+        accuracy = res["yes"] / total * 100 if total > 0 else 0
+        print(res)
+        print(f"קויד זוחא: {accuracy:.2f}%")
+        return res
