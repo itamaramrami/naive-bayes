@@ -34,4 +34,5 @@ class Tester:
         accuracy = res["yes"] / total * 100 if total > 0 else 0
         print(res)
         print(f"קויד זוחא: {accuracy:.2f}%")
+        res["accuracy"] = accuracy
         return res
