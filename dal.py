@@ -4,6 +4,7 @@ from db import TestData
 class NaiveBayesClassifier:
     def __init__(self):
         data_loader = TestData()
+        
         self.db = data_loader.get_train_data()
 
     def TargetVariable(self):
@@ -27,7 +28,7 @@ class NaiveBayesClassifier:
             for colom in coloms:
                 value_counts = re_d[colom].value_counts(normalize=True)
                 inner_dict[colom] = value_counts.to_dict()
-            res[target] = inner_dict    
+            res[target] = inner_dict  
         return res
 
     def predict_from_summary(self, summary, query):
@@ -59,6 +60,6 @@ class NaiveBayesClassifier:
                 prob *= value_prob
 
             scores[target_value] = prob
-
         best_target = max(scores, key=scores.get)
+
         return best_target, scores

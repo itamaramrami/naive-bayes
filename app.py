@@ -6,6 +6,7 @@ import numpy as np
 from dal import NaiveBayesClassifier
 from menu import menu
 
+
 app = FastAPI()
 
 menu_instance = menu()
@@ -42,9 +43,6 @@ async def get_test():
 @app.get("/predict")
 async def predict(request: Request):
     query_params = dict(request.query_params)
-    print(query_params)
-
-    
     classifier = NaiveBayesClassifier()
     summary = classifier.dictofsummary()
     prediction, scores = classifier.predict_from_summary(summary, query_params)
@@ -56,4 +54,4 @@ async def predict(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app, host="localhost", port=8001)

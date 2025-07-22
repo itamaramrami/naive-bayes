@@ -1,5 +1,7 @@
 import pandas as pd
 from db import TestData
+from logger import Logger
+
 
 class menu:
     def __init__(self):
@@ -55,5 +57,5 @@ class menu:
             if len(self.used_columns) == len(self.columns):
                 print("You selected all columns.")
                 break
-
+        Logger.log(f"Query: {self.query}")
         return self.query
