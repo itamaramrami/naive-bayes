@@ -1,6 +1,6 @@
 
-from menu import menu  
-from dal import NaiveBayesClassifier
+from server.menu import menu  
+from conntrolers.dal import NaiveBayesClassifier
 class SimpleRunner:
     def __init__(self):
         self.menu_instance = menu()

@@ -1,5 +1,5 @@
 import pandas as pd
-from db import TestData
+from DB.db import TestData
 
 class NaiveBayesClassifier:
     def __init__(self):

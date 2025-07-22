@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI ,Request
 from fastapi import FastAPI
-from test import Tester
+from Test.test import Tester
 import numpy as np
-from dal import NaiveBayesClassifier
-from menu import menu
+from conntrolers.dal import NaiveBayesClassifier
+from server.menu import menu
 
 
 app = FastAPI()

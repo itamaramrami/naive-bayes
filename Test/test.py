@@ -1,6 +1,6 @@
 import pandas as pd
-from db import TestData
-from dal import NaiveBayesClassifier
+from DB.db import TestData
+from conntrolers.dal import NaiveBayesClassifier
 
 class Tester:
     def __init__(self):
