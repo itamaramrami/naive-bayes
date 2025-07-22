@@ -1,9 +1,8 @@
-# db.py
-
 import pandas as pd
 
 class TestData:
     def __init__(self):
+
         self.df = pd.read_csv(
             r"C:\Users\IMOE001\Desktop\data\naive bayes\phishing.csv.csv",
             encoding="utf-8-sig",
