@@ -8,7 +8,7 @@ from server.menu import menu
 
 
 app = FastAPI()
-
+print("hello v2")
 menu_instance = menu()
 def convert_numpy_to_python(obj):
     if isinstance(obj, dict):
