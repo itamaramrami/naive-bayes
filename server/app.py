@@ -3,12 +3,16 @@ from fastapi import FastAPI ,Request
 from fastapi import FastAPI
 from Test.test import Tester
 import numpy as np
-from conntrolers.dal import NaiveBayesClassifier
+from Model.model import NaiveBayesModel
 from server.menu import menu
-
+from Classifie.classifie import NaiveBayesPredictor
 
 app = FastAPI()
-print("hello v2")
+print("hello v1")
+model = NaiveBayesModel()  
+predictor = NaiveBayesPredictor(model)  
+summary = model.dict_of_summary() 
+    
 menu_instance = menu()
 def convert_numpy_to_python(obj):
     if isinstance(obj, dict):
@@ -40,12 +44,11 @@ async def get_test():
     t=test.run_test()
     return t
 
+
 @app.get("/predict")
 async def predict(request: Request):
     query_params = dict(request.query_params)
-    classifier = NaiveBayesClassifier()
-    summary = classifier.dictofsummary()
-    prediction, scores = classifier.predict_from_summary(summary, query_params)
+    prediction, scores = predictor.predict_from_summary(summary, query_params)
     return {
         "prediction": int(prediction),
         "scores": convert_numpy_to_python(scores)

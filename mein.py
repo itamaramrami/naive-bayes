@@ -1,8 +1,8 @@
 import pandas as pd
 from DB.db import TestData
-from test.test import Tester
+from Test.test import Tester
 from server.MenuRender import SimpleRunner
-from conntrolers.dal import NaiveBayesClassifier
+from Model.model import NaiveBayesModel
 
 def mein():
     # resQuery = menu()

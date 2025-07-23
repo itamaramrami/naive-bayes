@@ -1,10 +1,10 @@
 
 from server.menu import menu  
-from conntrolers.dal import NaiveBayesClassifier
+from Model.model import NaiveBayesModel
 class SimpleRunner:
     def __init__(self):
         self.menu_instance = menu()
-        self.Naive = NaiveBayesClassifier()
+        self.Naive = NaiveBayesModel()
         self.summary = self.Naive.dictofsummary()
         self.query = self.menu_instance.build_query()
         
