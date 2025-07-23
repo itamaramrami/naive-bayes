@@ -1,19 +1,18 @@
 import uvicorn
-from fastapi import FastAPI ,Request
-from fastapi import FastAPI
-from Test.test import Tester
 import numpy as np
-from Model.model import NaiveBayesModel
-from server.menu import menu
+from fastapi import FastAPI ,Request
+from Test.test import Tester
 from Classifie.classifie import NaiveBayesPredictor
-
+import requests
 app = FastAPI()
-print("hello v1")
-model = NaiveBayesModel()  
-predictor = NaiveBayesPredictor(model)  
-summary = model.dict_of_summary() 
-    
-menu_instance = menu()
+print("hello v2")
+test=Tester()
+predictor = NaiveBayesPredictor()
+response = requests.get("http://model:81/predict")
+summary = response.json()
+
+
+
 def convert_numpy_to_python(obj):
     if isinstance(obj, dict):
         return {convert_numpy_to_python(k): convert_numpy_to_python(v) for k, v in obj.items()}
@@ -28,24 +27,17 @@ def convert_numpy_to_python(obj):
 
 
 
-@app.get("/options")
-async def get_options():
-    options = {}
-    for col in menu_instance.columns:
-        unique_vals = menu_instance.db[col].dropna().unique().tolist()
-        options[col] = unique_vals
-    return options
-
 
 
 @app.get("/test")
 async def get_test():
-    test=Tester()
     t=test.run_test()
     return t
 
 
-@app.get("/predict")
+
+
+@app.get("/call-model")
 async def predict(request: Request):
     query_params = dict(request.query_params)
     prediction, scores = predictor.predict_from_summary(summary, query_params)
@@ -57,4 +49,4 @@ async def predict(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

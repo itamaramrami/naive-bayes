@@ -4,7 +4,5 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-COPY phishing.csv.csv /app/phishing.csv.csv
-
 EXPOSE 80
-CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "ServerF.app:app", "--host", "0.0.0.0", "--port", "80"]

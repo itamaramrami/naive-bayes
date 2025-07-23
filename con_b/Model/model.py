@@ -1,4 +1,3 @@
-import pandas as pd
 from DB.db import TestData
 
 class NaiveBayesModel:

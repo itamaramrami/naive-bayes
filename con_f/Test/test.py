@@ -1,19 +1,19 @@
 import pandas as pd
-from DB.db import TestData
-from Model.model import NaiveBayesModel
+import requests
 from Classifie.classifie import NaiveBayesPredictor
-
+response_data = requests.get("http://model:81/data")
+response = requests.get("http://model:81/predict")
+summaryy = response.json()
 class Tester:
     def __init__(self):
-        self.data_loader = TestData()
-        self.test_db = self.data_loader.get_test_data()
-        self.classifier = NaiveBayesModel()
-        self.predictor = NaiveBayesPredictor(self.classifier)
-        self.summary = self.classifier.dict_of_summary()      
+        self.test_db = pd.DataFrame(response_data.json())
+        self.predictor = NaiveBayesPredictor()
+        self.summary = summaryy     
         self.target_col = self.test_db.columns[-1]
 
     def dict_of_test(self):
         return self.test_db.to_dict(orient='records')
+
 
     def run_test(self, verbose: bool = False):
         res = {"yes": 0, "no": 0}
@@ -25,13 +25,15 @@ class Tester:
             del query[self.target_col]
 
             prediction, scores = self.predictor.predict_from_summary(self.summary, query)
-
-            if prediction == actual:
+            print("prediction and actual")
+            print(type(prediction))
+            print(type(actual))
+            
+            if str(prediction).strip() == str(actual).strip():
                 res["yes"] += 1
             else:
                 res["no"] += 1
-                if verbose:
-                    print(f"תיזחת: {prediction} | תמא: {actual}")
+                print(f"תיזחת: {prediction} | תמא: {actual}")
 
         total = res["yes"] + res["no"]
         accuracy = res["yes"] / total * 100 if total > 0 else 0

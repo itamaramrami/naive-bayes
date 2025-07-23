@@ -1,13 +1,16 @@
-from Model.model import NaiveBayesModel
+import requests
 
+
+
+target_counts_response = requests.get("http://model:81/target_variable")
+target_counts = target_counts_response.json()
 
 class NaiveBayesPredictor:
-    def __init__(self, model: NaiveBayesModel):
-        self.model = model
+    def __init__(self):
+        pass
 
     def predict_from_summary(self, summary, query):
         scores = {}
-        target_counts = self.model.target_variable()  
         total_count = sum(target_counts.values())
         priors = {k: v / total_count for k, v in target_counts.items()}
 
