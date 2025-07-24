@@ -1,0 +1,13 @@
+
+
+my-net:
+docker network create my-net
+
+Con_b:
+docker build -t con_b .
+docker run -d --name model --network my-net -p 8002:81 con_b
+
+
+Con_f:
+docker build -t con_f .
+docker run -d --name model --network my-net -p 8001:80 con_f

@@ -1,15 +1,15 @@
 import uvicorn
 import numpy as np
 from fastapi import FastAPI ,Request
-from Test.test import Tester
 from Classifie.classifie import NaiveBayesPredictor
 import requests
 app = FastAPI()
 print("hello v2")
-test=Tester()
 predictor = NaiveBayesPredictor()
-response = requests.get("http://model:81/predict")
+response = requests.get("http://model:81/predict")  #מחזיר את המודל
 summary = response.json()
+responsedata = requests.get("http://model:81/data")  # מחזיר את הטסט
+data = responsedata.json()
 
 
 
@@ -31,8 +31,7 @@ def convert_numpy_to_python(obj):
 
 @app.get("/test")
 async def get_test():
-    t=test.run_test()
-    return t
+    return data
 
 
 

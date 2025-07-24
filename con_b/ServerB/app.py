@@ -1,21 +1,20 @@
 import uvicorn
 from fastapi import FastAPI 
 from Model.model import NaiveBayesModel
+from Test.test import Tester
 from DB.db import TestData
 import numpy as np
+
+
 app = FastAPI()
 print("hello v2")
+
 model = NaiveBayesModel()  
 data=TestData()
-testdata=data.get_test_data()
-testdata = testdata.to_dict(orient="records")
-summary = model.dict_of_summary() 
-print("summary")
-print(type(summary))
 
+summary = model.dict_of_summary() 
 variable=model.target_variable()
-print("variable")
-print(type(variable))
+
 
 
 
@@ -37,22 +36,17 @@ def convert_numpy_to_python(obj):
 
 
 
-@app.get("/data")
+@app.get("/data")  # מחזיר את הטסט
 async def data():
-    return testdata
+    dataloader=Tester()
+    data=dataloader.run_test()
+    return data
     
-
-
-
-
-
-
-@app.get("/predict")
+@app.get("/predict")  # מחזיר את המודל
 async def predict():
     return convert_numpy_to_python(summary)
 
-
-@app.get("/target_variable")
+@app.get("/target_variable")  # מחזיק דיקשנרי עמודת מטרה
 async def target_variabl():
     return convert_numpy_to_python(variable)
 
